@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Display</name>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>SE:SE:Robot:ReadPosition</pv_name>
+    <x>270</x>
+    <y>60</y>
+    <width>350</width>
+  </widget>
+  <widget type="table" version="2.0.0">
+    <name>Table</name>
+    <pv_name>SE:SE:Robot:Coordinates</pv_name>
+    <x>250</x>
+    <y>158</y>
+    <width>460</width>
+    <height>270</height>
+    <columns>
+      <column>
+        <name>A</name>
+        <width>70</width>
+        <editable>true</editable>
+      </column>
+      <column>
+        <name>B</name>
+        <width>70</width>
+        <editable>true</editable>
+      </column>
+      <column>
+        <name>C</name>
+        <width>70</width>
+        <editable>true</editable>
+      </column>
+      <column>
+        <name>D</name>
+        <width>70</width>
+        <editable>true</editable>
+      </column>
+      <column>
+        <name>E</name>
+        <width>70</width>
+        <editable>true</editable>
+      </column>
+      <column>
+        <name>F</name>
+        <width>70</width>
+        <editable>true</editable>
+      </column>
+    </columns>
+    <scripts>
+      <script file="EmbeddedPy">
+        <text><![CDATA[# Embedded python script
+# Display array of numbers in table
+from org.csstudio.display.builder.runtime.script import PVUtil, ScriptUtil
+
+data = PVUtil.getDoubleArray(pvs[0])
+cols = 6
+N = len(data)
+#  How many items are missing in last 'row'?
+fill = (cols - N%cols)
+data.extend([0] * fill)
+rows = len(data) / cols
+
+# Re-arrange as matrix, list where each item is a row of cells,
+# and each cell is a string
+matrix = []
+for row in range(rows):
+    line = [ str(data[i]) for i in range(row*cols, row*cols+cols) ]
+    matrix.append(line)
+
+widget.setValue(matrix)
+
+]]></text>
+        <pv_name>SE:SE:Robot:Coordinates</pv_name>
+      </script>
+    </scripts>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>SE:SE:Robot:Coordinates</pv_name>
+    <x>270</x>
+    <y>30</y>
+    <width>254</width>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_5</name>
+    <text>MecaRobot</text>
+    <x>3</x>
+    <y>100</y>
+    <width>119</width>
+    <height>25</height>
+    <font>
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input_1</name>
+    <pv_name>${S}:MoveLinB</pv_name>
+    <x>120</x>
+    <y>202</y>
+    <width>103</width>
+    <height>26</height>
+    <background_color>
+      <color name="WritePV_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_7</name>
+    <text>CoordinateB</text>
+    <y>203</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input_2</name>
+    <pv_name>${S}:MoveLinF</pv_name>
+    <x>120</x>
+    <y>378</y>
+    <width>103</width>
+    <height>26</height>
+    <background_color>
+      <color name="WritePV_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_8</name>
+    <text>CoordinateC</text>
+    <y>245</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input_4</name>
+    <pv_name>${S}:MoveLinE</pv_name>
+    <x>120</x>
+    <y>333</y>
+    <width>103</width>
+    <height>26</height>
+    <background_color>
+      <color name="WritePV_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_10</name>
+    <text>CoordinateE</text>
+    <y>334</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input_5</name>
+    <pv_name>${S}:MoveLinD</pv_name>
+    <x>120</x>
+    <y>288</y>
+    <width>103</width>
+    <height>26</height>
+    <background_color>
+      <color name="WritePV_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_11</name>
+    <text>CoordinateF</text>
+    <y>380</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input_6</name>
+    <pv_name>${S}:MoveLinC</pv_name>
+    <x>120</x>
+    <y>245</y>
+    <width>103</width>
+    <height>26</height>
+    <background_color>
+      <color name="WritePV_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_12</name>
+    <text>CoordinateD</text>
+    <y>289</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Input_7</name>
+    <pv_name>${S}:MoveLinA</pv_name>
+    <x>120</x>
+    <y>158</y>
+    <width>103</width>
+    <height>26</height>
+    <background_color>
+      <color name="WritePV_Background" red="128" green="255" blue="255">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_13</name>
+    <text>CoordinateA</text>
+    <y>161</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Execute Coordinates</name>
+    <pv_name>$(S):SetMoveLin</pv_name>
+    <x>18</x>
+    <y>428</y>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Execute Coordinates_1</name>
+    <pv_name>$(S):GripperClose</pv_name>
+    <x>318</x>
+    <y>418</y>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Execute Coordinates_2</name>
+    <pv_name>$(S):GripperOpen</pv_name>
+    <x>318</x>
+    <y>458</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_14</name>
+    <text>Gripper Open</text>
+    <x>188</x>
+    <y>458</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_15</name>
+    <text>Gripper Closed</text>
+    <x>188</x>
+    <y>418</y>
+    <width>110</width>
+    <height>26</height>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+</display>

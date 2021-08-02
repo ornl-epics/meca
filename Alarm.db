@@ -1,0 +1,27 @@
+record(bo, "$(S):$(TA):$(DN):AlarmDisable")
+{
+    field(DESC, "Disable Global Alarm")
+    field (ZNAM, "AlarmDisabled")
+    field (ONAM, "AlarmEnabled")
+    field (ZSV, "MINOR")
+    info(archive, "Monitor, 00:01:00")
+    field(PINI, "YES")
+    field(VAL, "1")
+
+}
+
+record(calc, "$(S):$(TA):$(DN):GlobalAlarm"){
+  field(INPA, "$(S):$(TA):$(DN):AlarmDisable CPP")
+  field(INPB, "$(S):$(TA):$(DN):ErrorState CPP")
+  field(INPC, "$(S):$(TA):$(DN):GES CPP")
+  field(INPD, "$(S):$(TA):$(DN):GOH CPP")
+  field(INPE, "$(S):$(TA):$(DN):PartError CPP")
+  field(INPF, "$(S):$(TA):$(DN):PausedState CPP")
+  field(INPG, "$(S):$(TA):$(DN):ActivationState CPP")
+  field(CALC, "A&((B>0)|C>0|D>0|E>0|F>0|G=0)")
+  field(HIHI, "1")
+  field(HHSV, "MAJOR")
+  info(archive, "Monitor, 00:01:00")
+
+}
+

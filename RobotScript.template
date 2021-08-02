@@ -1,0 +1,20 @@
+
+record(waveform, "$(S):$(TA):$(DN):ScriptFile") {
+  field(DESC, "File Location")
+  field(PINI, "YES")
+  field(NELM, "500")
+  field(FTVL, "CHAR")
+  info(autosaveFields, "VAL")
+}
+
+
+record(bo, "$(S):$(TA):$(DN):RunScript")
+{
+  field(DESC, "run script to import data")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Load Script")
+  field(ONAM, "Loading..")
+  field(HIGH, "0.5")
+}
+
+

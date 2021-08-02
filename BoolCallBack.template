@@ -1,0 +1,111 @@
+################################################
+####Robot Callback Section
+################################################
+record(busy, "$(S):$(TA):$(DN):Busy")
+{
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+record(longout, "$(S):$(TA):$(DN):SampleNumCB") {
+  field(DESC, "sample number")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(FLNK, "$(S):$(TA):$(DN):SetCB")
+}
+
+record (calcout, "$(S):$(TA):$(DN):SetCB") {
+  field(INPA, "$(S):$(TA):$(DN):SampleNumCB")
+  field(CALC, "A>0")
+  field(DOPT, "Use CALC")
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(S):$(TA):$(DN):BusySet PP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+
+record(longout, "$(S):$(TA):$(DN):BusySet")
+{
+        field(VAL, "1")
+        field(OUT, "$(S):$(TA):$(DN):Busy PP")
+        field(FLNK, "$(S):$(TA):$(DN):SeqCB")
+}
+
+record(seq, "$(S):$(TA):$(DN):SeqCB")
+{
+   field(DLY1, "0.5")
+   field(DOL1, "$(S):$(TA):$(DN):SampleNumCB")
+   field(LNK1, "$(S):$(TA):$(DN):SampleNum PP")
+   field(DLY2, "0.5")
+   field(DOL2, "1")
+   field(LNK2, "$(S):$(TA):$(DN):Execute PP")
+}
+
+##################Record Clears the callback###
+
+record (bo, "$(S):$(TA):$(DN):UnsetCB") {
+  field(DESC, "Clear call back on demand")
+  info(archive, "Monitor, 00:01:00")
+  field(HIGH, "0.5")
+  field(OUT, "$(S):$(TA):$(DN):Busy PP")
+  field(VAL, "0")
+}
+
+
+record (calcout, "$(S):$(TA):$(DN):ClearCB") {
+  field(INPA, "$(S):$(TA):$(DN):AtPosition CP")
+  field(CALC, "A=0")
+  field(DOPT, "Use CALC")
+  field(OOPT, "When Zero")
+  field(OUT, "$(S):$(TA):$(DN):Busy PP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+###################################
+#Rtr Sample Call back
+###################################
+##### start of the return call back. Record 
+record(bo, "$(S):$(TA):$(DN):RtrFlagCB") {
+  field(DESC, "Return Flag Call Back")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(FLNK, "$(S):$(TA):$(DN):RtrSetCB")
+  field(HIGH, "0.5")
+}
+#calc sets the busy record when no-zero
+record (calcout, "$(S):$(TA):$(DN):RtrSetCB") {
+  field(INPA, "$(S):$(TA):$(DN):RtrFlagCB")
+  field(CALC, "A>0")
+  field(DOPT, "Use CALC")
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(S):$(TA):$(DN):RtrBusy PP")
+  info(archive, "Monitor, 00:01:00")
+  field(FLNK, "$(S):$(TA):$(DN):RtrSendSet")
+}
+#calc send the Resume to the action pv when non-zero
+record (calcout, "$(S):$(TA):$(DN):RtrSendSet") {
+  field(DESC, "Set the return when 1")
+  field(INPA, "$(S):$(TA):$(DN):RtrFlagCB")
+  field(CALC, "A>0")
+  field(DOPT, "Use CALC")
+  field(OOPT, "When Non-zero")
+  field(OUT, "$(S):$(TA):$(DN):ResumeFlag PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+#Set the busy Record whe RtrFlagCB is set to 1
+record(busy, "$(S):$(TA):$(DN):RtrBusy")
+{
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+##################Record Clears the callback###
+record (bo, "$(S):$(TA):$(DN):RtrUnsetCB") {
+  field(DESC, "Clear call back on demand")
+  info(archive, "Monitor, 00:01:00")
+  field(HIGH, "0.5")
+  field(OUT, "$(S):$(TA):$(DN):RtrBusy PP")
+  field(VAL, "0")
+}
+

@@ -1,0 +1,512 @@
+#################################
+#Assigned Robot Positions
+#Mariano Ruiz Dec 8 2020
+#################################
+
+record(bo,"$(S):$(TA):$(DN):Pos1")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos1AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos1AO")
+{
+  field(VAL, "0")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+record(bo,"$(S):$(TA):$(DN):Pos2")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos2AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos2AO")
+{
+  field(VAL, "1")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+record(bo,"$(S):$(TA):$(DN):Pos3")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos3AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos3AO")
+{
+  field(VAL, "2")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+
+record(bo,"$(S):$(TA):$(DN):Pos4")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos4AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos4AO")
+{
+  field(VAL, "3")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos5")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos5AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos5AO")
+{
+  field(VAL, "4")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos6")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos6AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos6AO")
+{
+  field(VAL, "5")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos7")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos7AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos7AO")
+{
+  field(VAL, "6")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos8")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos8AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos8AO")
+{
+  field(VAL, "7")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos9")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos9AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos9AO")
+{
+  field(VAL, "8")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos10")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos10AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos10AO")
+{
+  field(VAL, "9")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos11")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos11AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos11AO")
+{
+  field(VAL, "10")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos12")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos12AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos12AO")
+{
+  field(VAL, "11")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo,"$(S):$(TA):$(DN):Pos13")
+{
+        field(DESC, "Select Position")
+        field(ZNAM, "---")
+        field(ONAM, "Sending")
+        field(HIGH, "0.5")
+        info(autosaveFields, "ZNAM")
+        info(archive, "Monitor, 00:01:00")
+        field(FLNK, "$(S):$(TA):$(DN):Pos13AO")
+}
+
+record(ao, "$(S):$(TA):$(DN):Pos13AO")
+{
+  field(VAL, "12")
+  field(OUT, "$(S):$(TA):$(DN):SelectorD CPP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+##############################################
+#Extract Array Subset for Dedicated Positions
+##############################################
+record(waveform, "$(S):$(TA):$(DN):DCoord") {
+  field(DESC, "Dedicated Coordinates")
+  field(PINI, "YES")
+  field(NELM, "1200")
+  field(FTVL, "FLOAT")
+  field(PREC, "3")
+  info(autosaveFields, "VAL")
+}
+
+record(bo, "$(S):$(TA):$(DN):SaveDCoord")
+{
+  field(HIGH, "0.5")
+  field(DESC, "Save commands CSS")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Save")
+  field(ONAM, "Saving..")
+}
+
+record(longin, "$(S):$(TA):$(DN):SelectorD")
+{
+  field(EGU, "AxisIndex")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Index1D")
+{
+  field(INPA, "$(S):$(TA):$(DN):SelectorD CPP")
+  field(CALC, "A=0?0:A*6")
+  field(DOPT, "Use CALC")
+  field(OUT, "$(S):$(TA):$(DN):Set1D.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set1D")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Index2D")
+{
+  field(INPA, "$(S):$(TA):$(DN):SelectorD CPP")
+  field(CALC, "A=0?1:A*6+1")
+  field(DOPT, "Use CALC")
+  field(OUT, "$(S):$(TA):$(DN):Set2D.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set2D")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Index3D")
+{
+  field(INPA, "$(S):$(TA):$(DN):SelectorD CPP")
+  field(CALC, "A=0?2:A*6+2")
+  field(DOPT, "Use CALC")
+  field(OUT, "$(S):$(TA):$(DN):Set3D.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set3D")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Index4D")
+{
+  field(INPA, "$(S):$(TA):$(DN):SelectorD CPP")
+  field(CALC, "A=0?3:A*6+3")
+  field(DOPT, "Use CALC")
+  field(OUT, "$(S):$(TA):$(DN):Set4D.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set4D")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Index5D")
+{
+  field(INPA, "$(S):$(TA):$(DN):SelectorD CPP")
+  field(CALC, "A=0?4:A*6+4")
+  field(DOPT, "Use CALC")
+  field(OUT, "$(S):$(TA):$(DN):Set5D.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set5D")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Index6D")
+{
+  field(INPA, "$(S):$(TA):$(DN):SelectorD CPP")
+  field(CALC, "A=0?5:A*6+5")
+  field(DOPT, "Use CALC")
+  field(OUT, "$(S):$(TA):$(DN):Set6D.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set6D")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):Set1D")
+{
+    field(INP,  "$(S):$(TA):$(DN):DCoord CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "1200")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set2D")
+{
+    field(INP,  "$(S):$(TA):$(DN):DCoord CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "1200")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):Set3D")
+{
+    field(INP,  "$(S):$(TA):$(DN):DCoord CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "1200")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set4D")
+{
+    field(INP,  "$(S):$(TA):$(DN):DCoord CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "1200")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set5D")
+{
+    field(INP,  "$(S):$(TA):$(DN):DCoord CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "1200")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set6D")
+{
+    field(INP,  "$(S):$(TA):$(DN):DCoord CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "1200")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+
+record(calcout, "$(S):$(TA):$(DN):Grab1")
+{
+  field(INPA, "$(S):$(TA):$(DN):Set1D CPP")
+  field(CALC, "A")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):MoveLinAD PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Grab2")
+{
+  field(INPA, "$(S):$(TA):$(DN):Set2D CPP")
+  field(CALC, "A")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):MoveLinBD PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Grab3")
+{
+  field(INPA, "$(S):$(TA):$(DN):Set3D CPP")
+  field(CALC, "A")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):MoveLinCD PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Grab4")
+{
+  field(INPA, "$(S):$(TA):$(DN):Set4D CPP")
+  field(CALC, "A")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):MoveLinDD PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Grab5")
+{
+  field(INPA, "$(S):$(TA):$(DN):Set5D CPP")
+  field(CALC, "A")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):MoveLinED PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(calcout, "$(S):$(TA):$(DN):Grab6")
+{
+  field(INPA, "$(S):$(TA):$(DN):Set6D CPP")
+  field(CALC, "A")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):MoveLinFD PP")
+  info(archive, "Monitor, 00:01:00")
+}
+
+##############################################
+#Send move command Section
+#
+record(ao, "$(S):$(TA):$(DN):MoveLinAD")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(ao, "$(S):$(TA):$(DN):MoveLinBD")
+{ 
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(ao, "$(S):$(TA):$(DN):MoveLinCD")
+{ 
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(ao, "$(S):$(TA):$(DN):MoveLinDD")
+{ 
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(ao, "$(S):$(TA):$(DN):MoveLinED")
+{ 
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(ao, "$(S):$(TA):$(DN):MoveLinFD")
+{ 
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+record(bo, "$(S):$(TA):$(DN):SetMoveLinD")
+{
+  field (DESC, "Call MoveLin Calc Dedicated")
+  field(DESC, "Send Move Lin Command")
+  field(HIGH, "1")
+  field(FLNK, "$(S):$(TA):$(DN):DedicatedMove")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record (calcout, "$(S):$(TA):$(DN):DedicatedMove") {
+  field (DESC, "Send move command Deidcated")
+  field (INPA, "$(S):$(TA):$(DN):MoveLinAD")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinBD")
+  field (INPC, "$(S):$(TA):$(DN):MoveLinCD")
+  field (INPD, "$(S):$(TA):$(DN):MoveLinDD")
+  field (INPE, "$(S):$(TA):$(DN):MoveLinED")
+  field (INPF, "$(S):$(TA):$(DN):MoveLinFD")
+  field (CALC, "0")
+  field (DTYP, "stream")
+  field(OUT, "@Robot.proto MoveLin Robot1")
+  info(archive, "Monitor, 00:01:00")
+
+}
+

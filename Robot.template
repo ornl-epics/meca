@@ -1,0 +1,1037 @@
+######
+#MECA Robot Main DB  Mariano Ruiz Dec 8th 2020
+
+
+#######################
+#initialize Robot
+#
+record(seq, "$(S):$(TA):$(DN):InitSeq") {
+  field(DESC, "Initialize Robot")
+  field(PINI, "YES")
+  field(DOL1, "0.4")
+  field(DLY1, "1")
+  field(LNK1, "$(S):$(TA):$(DN):ResetError.PROC")
+  field(DOL2, "1")
+  field(DLY2, "1")
+  field(LNK2, "$(S):$(TA):$(DN):ResumeMotion.PROC")
+  field(DOL3, "1")
+  field(DLY3, "1")
+  field(LNK3, "$(S):$(TA):$(DN):SetGripperVel.PROC")
+  field(DOL4, "1")
+  field(DLY4, "1")
+  field(LNK4, "$(S):$(TA):$(DN):SetGripperForce.PROC")
+  field(DOL5, "1")
+  field(DLY5, "1")
+  field(LNK5, "$(S):$(TA):$(DN):SetJointVel.PROC")
+  field(DOL6, "1")
+  field(DLY6, "1")
+  field(LNK6, "$(S):$(TA):$(DN):SetCartLinVel.PROC")
+}
+
+
+record(bo, "$(S):$(TA):$(DN):ResetError") {
+  info(DESC, "Reset Error")
+  field(HIGH, "0.5")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto ResetError Robot1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+}
+
+record(bo, "$(S):$(TA):$(DN):ResumeMotion") {
+  info(DESC, "Resume Motion")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto ResumeMotion Robot1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+  field(HIGH, "0.1")
+}
+
+record(ao, "$(S):$(TA):$(DN):SetGripperVel") {
+  info(DESC, "Set Gripper Velocity")
+  field(VAL, "100")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto SetGripperVel Robot1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+}
+
+record(ao, "$(S):$(TA):$(DN):SetGripperForce") {
+  info(DESC, "Set Gripper Force")
+  field(VAL, "30")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto SetGripperForce Robot1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+}
+
+record(ao, "$(S):$(TA):$(DN):SetJointVel") {
+  info(DESC, "Set Joint Velocity")
+  field(VAL, "40")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto SetJointVel Robot1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+}
+
+record(ao, "$(S):$(TA):$(DN):SetCartLinVel") {
+  info(DESC, "Set Cart Linear Velocity")
+  field(VAL, "80")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto SetCartLinVel Robot1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+}
+
+
+#########################################################
+#Gripper 
+#########################################################
+record(bo, "$(S):$(TA):$(DN):GripperOpen") {
+  info(DESC, "Open Gripper")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto GripperOpen Robot1")
+  field(HIGH, "1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+}
+
+
+record(bo, "$(S):$(TA):$(DN):GripperClose") {
+  info(DESC, "Close Gripper")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto GripperClose Robot1")
+  field(HIGH, "1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+
+}
+
+#######################################################
+#PauseMotion
+#######################################################
+
+record(bo, "$(S):$(TA):$(DN):PauseMotion") {
+  info(DESC, "Pause Motion")
+  field(DTYP, "stream")
+  field(OUT, "@Robot.proto PauseMotion Robot1")
+  field(HIGH, "0.1")
+  info(archive, "Monitor, 00:01:00")
+  info(autosaveFields, "VAL")
+
+}
+
+
+##################################################################
+#GetStatusRobot
+##################################################################
+record(calc, "$(S):$(TA):$(DN):AtPositionC")
+{
+  field(INPA, "$(S):$(TA):$(DN):Execute CPP")
+  field(INPB, "$(S):$(TA):$(DN):Status CPP") 
+  field(CALC, "B=1")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(bi, "$(S):$(TA):$(DN):AtPosition")
+{
+  field(INP, "$(S):$(TA):$(DN):AtPositionC CPP")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Moving")
+  field(ONAM, "At_Position")
+  field(PINI, "YES")
+}
+
+record(waveform, "$(S):$(TA):$(DN):RobotStatus") {
+  field(INP, "@Robot.proto ReadStatus Robot1")
+  field (DTYP, "stream")
+  field(SCAN, "1 second")
+  field(PINI, "YES")
+  field(NELM, "7")
+  field(FTVL, "LONG")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):ActivationStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "0")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):ActivationState")
+{
+  field(INP, "$(S):$(TA):$(DN):ActivationStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):HomingStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "1")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):HomingState")
+{
+  field(INP, "$(S):$(TA):$(DN):HomingStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):SimulationStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "2")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):SimulationState")
+{
+  field(INP, "$(S):$(TA):$(DN):SimulationStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):ErrorStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "3")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):ErrorState")
+{
+  field(INP, "$(S):$(TA):$(DN):ErrorStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):PausedStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "4")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):PausedState")
+{
+  field(INP, "$(S):$(TA):$(DN):PausedStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):EOBStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "5")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):EOBState")
+{
+  field(INP, "$(S):$(TA):$(DN):EOBStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):EOMStateA")
+{
+    field(INP,  "$(S):$(TA):$(DN):RobotStatus CPP")
+    field(FTVL, "LONG")
+    field(MALM, "7")
+    field(NELM, "1")
+    field(INDX, "6")
+    info(archive, "Monitor, 00:01:00")
+}
+
+record(bi, "$(S):$(TA):$(DN):EOMState")
+{
+  field(INP, "$(S):$(TA):$(DN):EOMStateA CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+##################################################################
+#Read Gripper Status
+##################################################################
+record(waveform, "$(S):$(TA):$(DN):GripperStatus") {
+  field(DESC, "Gripper Status")
+  field (DTYP, "stream")
+  field(INP, "@Robot.proto ReadGripperStatus Robot1")
+  field(SCAN, "1 second")
+  field(PINI, "YES")
+  field(NELM, "6")
+  field(FTVL, "FLOAT")
+  field(PREC, "0")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):GGEA")
+{
+    field(DESC, "Gripper Enabled")
+    field(INP,  "$(S):$(TA):$(DN):GripperStatus CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+
+record(bi, "$(S):$(TA):$(DN):GGE")
+{
+  field(DESC, "Gripper Enabled")
+  field(ZNAM, "Gripper Disabled")
+  field(ONAM, "Gripper Enabled")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):GGEA CPP")
+}
+
+record(subArray, "$(S):$(TA):$(DN):GHSA")
+{
+    field(DESC, "Gripper Homing State Array")
+    field(INP,  "$(S):$(TA):$(DN):GripperStatus CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+
+record(bi, "$(S):$(TA):$(DN):GHS")
+{
+  field(DESC, "Gripper Homing State")
+  field(ZNAM, "Gripper Not Homed")
+  field(ONAM, "Gripper Homed")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):GHSA CPP")
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):GHPA")
+{
+    field(DESC, "Gripper Holding Part")
+    field(INP,  "$(S):$(TA):$(DN):GripperStatus CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "2")
+}
+
+
+record(bi, "$(S):$(TA):$(DN):GHP")
+{
+  field(DESC, "Gripper Holding Part")
+  field(ZNAM, "Gripper No Part")
+  field(ONAM, "Gripper Holding Part")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):GHPA CPP")
+}
+
+record(subArray, "$(S):$(TA):$(DN):GLMA")
+{
+    field(DESC, "Gripper Limit Status")
+    field(INP,  "$(S):$(TA):$(DN):GripperStatus CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "3")
+} 
+  
+  
+record(bi, "$(S):$(TA):$(DN):GLM")
+{ 
+  field(DESC, "Gripper Holding Part")
+  field(ZNAM, "Gripper !Closed !Open")
+  field(ONAM, "Gripper Closed or Open")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):GLMA CPP")
+}  
+
+
+
+    
+record(subArray, "$(S):$(TA):$(DN):GESA")
+{
+    field(DESC, "Gripper Error Status")
+    field(INP,  "$(S):$(TA):$(DN):GripperStatus CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "4")
+} 
+
+
+record(bi, "$(S):$(TA):$(DN):GES")
+{
+  field(DESC, "Gripper Holding Part")
+  field(ZNAM, "Gripper No Error")
+  field(ONAM, "Gripper Error")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):GESA CPP")
+}
+
+record(subArray, "$(S):$(TA):$(DN):GOHA")
+{
+    field(DESC, "Gripper Over Heat Status")
+    field(INP,  "$(S):$(TA):$(DN):GripperStatus CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "5")
+}
+
+record(bi, "$(S):$(TA):$(DN):GOH")
+{
+  field(DESC, "Gripper Over Heat Status")
+  field(ZNAM, "Gripper Temp OK")
+  field(ONAM, "Gripper Overheating")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):GOHA CPP")
+}
+##################################################################
+#Read Positions
+##################################################################
+record(waveform, "$(S):$(TA):$(DN):ReadPosition") {
+  field (DTYP, "stream")
+  field(INP, "@Robot.proto ReadPosition Robot1")
+  field(SCAN, "1 second")
+  field(PINI, "YES")
+  field(NELM, "6")
+  field(FTVL, "FLOAT")
+  field(PREC, "3")
+  info(archive, "Monitor, 00:01:00")
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):Pos1A")
+{
+    field(INP,  "$(S):$(TA):$(DN):ReadPosition CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):ReadLinA")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Pos1A CPP")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Pos2A")
+{
+    field(INP,  "$(S):$(TA):$(DN):ReadPosition CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "1")
+}
+
+record(ai, "$(S):$(TA):$(DN):ReadLinB")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Pos2A CPP")
+
+}
+
+
+record(subArray, "$(S):$(TA):$(DN):Pos3A")
+{
+    field(INP,  "$(S):$(TA):$(DN):ReadPosition CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "2")
+}
+
+record(ai, "$(S):$(TA):$(DN):ReadLinC")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Pos3A CPP")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Pos4A")
+{
+    field(INP,  "$(S):$(TA):$(DN):ReadPosition CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "3")
+}
+
+record(ai, "$(S):$(TA):$(DN):ReadLinD")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Pos4A CPP")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Pos5A")
+{
+    field(INP,  "$(S):$(TA):$(DN):ReadPosition CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "4")
+}
+
+record(ai, "$(S):$(TA):$(DN):ReadLinE")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Pos5A CPP")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Pos6A")
+{
+    field(INP,  "$(S):$(TA):$(DN):ReadPosition CPP")
+    field(FTVL, "FLOAT")
+    field(MALM, "6")
+    field(NELM, "1")
+    field(INDX, "5")
+}
+
+record(ai, "$(S):$(TA):$(DN):ReadLinF")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Pos6A CPP")
+}
+
+
+############Status Message from SNL##############
+record(stringout, "$(S):$(TA):$(DN):Message")
+{
+   field(DESC, "SNL Message")
+   field(DTYP, "Soft Channel")
+   field(VAL, " ")
+}
+
+record(mbbiDirect, "$(S):$(TA):$(DN):Status") {
+  field(NOBT, "16")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(calc, "$(S):$(TA):$(DN):PartError")
+{
+  field(DESC, "Part not found error")
+  field(INPA, "$(S):$(TA):$(DN):Status CPP")
+  field(CALC, "A=16")
+  info(archive, "Monitor, 00:01:00")
+}
+
+###################################################################
+#Parse and Set the coordinates section#############################
+record(longout, "$(S):$(TA):$(DN):SampleNum") {
+  field(DESC, "sample number")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+
+}
+#####for mapping strings to sample numbers not used yet
+record(stringout, "$(S):$(TA):$(DN):SampleNumStr") {
+  field(DESC, "sample number in str")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(longout, "$(S):$(TA):$(DN):SampleNumTra") {
+  field(DESC, "sample number translator")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+###################################
+record(waveform, "$(S):$(TA):$(DN):SampleNumA") {
+  field(DESC, "Sample Number Array")
+  field(PINI, "YES")
+  field(NELM, "30000")
+  field(FTVL, "USHORT")
+  field(PREC, "3")
+  info(autosaveFields, "VAL")
+}
+record(bo, "$(S):$(TA):$(DN):SaveNumA")
+{
+  field(HIGH, "0.5")
+  field(DESC, "Save commands CSS")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Save")
+  field(ONAM, "Saving..")
+}
+
+
+record(waveform, "$(S):$(TA):$(DN):Coordinates") {
+  field(DESC, "Array of Coordinates")
+  field(PINI, "YES")
+  field(NELM, "30000")
+  field(FTVL, "FLOAT")
+  field(PREC, "3")
+  info(autosaveFields, "VAL")
+}
+
+record(bo, "$(S):$(TA):$(DN):SaveCoordinates")
+{
+  field(HIGH, "0.5")
+  field(DESC, "Save commands CSS")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Save")
+  field(ONAM, "Saving..")
+}
+
+
+
+record(waveform, "$(S):$(TA):$(DN):Commands") {
+  field(DESC, "Array of commands")
+  field(PINI, "YES")
+  field(NELM, "30000")
+  field(FTVL, "FLOAT")
+  field(PREC, "3")
+  info(autosaveFields, "VAL")
+}
+
+record(bo, "$(S):$(TA):$(DN):SaveCommands")
+{
+  field(HIGH, "0.5")
+  field(DESC, "Save commands CSS")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Save")
+  field(ONAM, "Saving..")
+}
+
+
+record(longin, "$(S):$(TA):$(DN):Wait")
+{
+  field(EGU, "S")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(longin, "$(S):$(TA):$(DN):Selector")
+{
+  field(EGU, "AxisIndex")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(longin, "$(S):$(TA):$(DN):Instruction")
+{
+  field(EGU, "")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(longin, "$(S):$(TA):$(DN):StartIndx")
+{
+  field(EGU, "")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+
+record(longin, "$(S):$(TA):$(DN):StopIndx")
+{
+  field(EGU, "")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(bo, "$(S):$(TA):$(DN):Execute")
+{
+  field(HIGH, "0.5")
+  field(DESC, "execute movement SNL")
+  info(archive, "Monitor, 00:01:00")
+
+}
+record(calcout, "$(S):$(TA):$(DN):Index1")
+{
+  field(INPA, "$(S):$(TA):$(DN):Selector CPP")
+  field(CALC, "A=0?0:A*6")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):Set1.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set1")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set1")
+{
+    field(INP,  "$(S):$(TA):$(DN):Coordinates")
+    field(FTVL, "FLOAT")
+    field(MALM, "30000")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):MoveLinA")
+{       
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Set1 CPP")
+
+}
+
+
+
+record(calcout, "$(S):$(TA):$(DN):Index2")
+{
+  field(INPA, "$(S):$(TA):$(DN):Index1 CPP")
+  field(CALC, "A+1")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):Set2.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set2")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set2")
+{
+    field(INP,  "$(S):$(TA):$(DN):Coordinates")
+    field(FTVL, "FLOAT")
+    field(MALM, "30000")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):MoveLinB")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Set2 CPP")
+}
+
+
+
+record(calcout, "$(S):$(TA):$(DN):Index3")
+{
+  field(INPA, "$(S):$(TA):$(DN):Index1 CPP")
+  field(CALC, "A+2")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):Set3.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set3")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set3")
+{
+    field(INP,  "$(S):$(TA):$(DN):Coordinates")
+    field(FTVL, "FLOAT")
+    field(MALM, "30000")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):MoveLinC")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Set3 CPP")
+}
+
+
+
+record(calcout, "$(S):$(TA):$(DN):Index4")
+{
+  field(INPA, "$(S):$(TA):$(DN):Index1 CPP")
+  field(CALC, "A+3")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):Set4.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set4")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set4")
+{
+    field(INP,  "$(S):$(TA):$(DN):Coordinates")
+    field(FTVL, "FLOAT")
+    field(MALM, "30000")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):MoveLinD")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Set4 CPP")
+}
+
+
+record(calcout, "$(S):$(TA):$(DN):Index5")
+{
+  field(INPA, "$(S):$(TA):$(DN):Index1 CPP")
+  field(CALC, "A+4")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):Set5.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set5 CPP")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set5")
+{
+    field(INP,  "$(S):$(TA):$(DN):Coordinates")
+    field(FTVL, "FLOAT")
+    field(MALM, "30000")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):MoveLinE")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Set5 CPP")
+}
+
+
+
+record(calcout, "$(S):$(TA):$(DN):Index6")
+{
+  field(INPA, "$(S):$(TA):$(DN):Index1 CPP")
+  field(CALC, "A+5")
+  field(DOPT, "Use CALC")
+  field(OOPT, "On Change")
+  field(OUT, "$(S):$(TA):$(DN):Set6.INDX")
+  field(FLNK, "$(S):$(TA):$(DN):Set6")
+}
+
+record(subArray, "$(S):$(TA):$(DN):Set6")
+{
+    field(INP,  "$(S):$(TA):$(DN):Coordinates")
+    field(FTVL, "FLOAT")
+    field(MALM, "30000")
+    field(NELM, "1")
+    field(INDX, "0")
+}
+
+record(ai, "$(S):$(TA):$(DN):MoveLinF")
+{
+  field(PREC,     "3")
+  info(archive, "Monitor, 00:01:00")
+  field(INP, "$(S):$(TA):$(DN):Set6 CPP")
+}
+
+###Send coordinates to the Robot
+record(bo, "$(S):$(TA):$(DN):SetMoveLin")
+{
+  field (DESC, "Call MoveLin Calc")
+  field(DESC, "Send Move Lin Command")
+  field(HIGH, "1")
+  field(FLNK, "$(S):$(TA):$(DN):MoveLin")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+record (calcout, "$(S):$(TA):$(DN):MoveLin") {
+  field (DESC, "Send move command with coords")
+  field (INPA, "$(S):$(TA):$(DN):MoveLinA")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinB")
+  field (INPC, "$(S):$(TA):$(DN):MoveLinC")
+  field (INPD, "$(S):$(TA):$(DN):MoveLinD")
+  field (INPE, "$(S):$(TA):$(DN):MoveLinE")
+  field (INPF, "$(S):$(TA):$(DN):MoveLinF")
+  field (CALC, "0")
+  field (DTYP, "stream")
+  field(OUT, "@Robot.proto MoveLin Robot1")
+  info(archive, "Monitor, 00:01:00")
+
+}
+
+
+
+#########################Within Tolerances Section####
+#####Check for firmware errors notice
+#position feed back is positive when should be negative
+#Proper cal for all these tol records should be
+#  field (CALC, "ABS(A-B)<=C")
+#  but for now will use ABS((ABS(A)-ABS(B)))<=TolA
+#  At least we will compare a close value even if sign is wrong
+record (calc, "$(S):$(TA):$(DN):InTolA"){
+  field (DESC, "Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):ReadLinA CPP")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinA CPP")
+  field (INPC, "$(S):$(TA):$(DN):TolA CPP")
+  field (CALC, "ABS((ABS(A)-ABS(B)))<=C")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+record (ai, "$(S):$(TA):$(DN):TolA"){
+  field (DESC, "Tolerance for positions")
+  field (PREC, "3")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(PINI, "YES")
+
+}
+
+record (calc, "$(S):$(TA):$(DN):InTolB"){
+  field (DESC, "Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):ReadLinB CPP")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinB CPP")
+  field (INPC, "$(S):$(TA):$(DN):TolB CPP")
+  field (CALC, "ABS((ABS(A)-ABS(B)))<=C")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+record (ai, "$(S):$(TA):$(DN):TolB"){
+  field (DESC, "Tolerance for positions")
+  field (PREC, "3")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(PINI, "YES")
+
+}
+
+record (calc, "$(S):$(TA):$(DN):InTolC"){
+  field (DESC, "Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):ReadLinC CPP")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinC CPP")
+  field (INPC, "$(S):$(TA):$(DN):TolC CPP")
+  field (CALC, "ABS((ABS(A)-ABS(B)))<=C")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+record (ai, "$(S):$(TA):$(DN):TolC"){
+  field (DESC, "Tolerance for positions")
+  field (PREC, "3")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(PINI, "YES")
+
+}
+
+record (calc, "$(S):$(TA):$(DN):InTolD"){
+  field (DESC, "Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):ReadLinD CPP")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinD CPP")
+  field (INPC, "$(S):$(TA):$(DN):TolD CPP")
+  field (CALC, "ABS((ABS(A)-ABS(B)))<=C")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+record (ai, "$(S):$(TA):$(DN):TolD"){
+  field (DESC, "Tolerance for positions")
+  field (PREC, "3")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(PINI, "YES")
+
+}
+
+record (calc, "$(S):$(TA):$(DN):InTolE"){
+  field (DESC, "Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):ReadLinE CPP")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinE CPP")
+  field (INPC, "$(S):$(TA):$(DN):TolE CPP")
+  field (CALC, "ABS((ABS(A)-ABS(B)))<=C")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+record (ai, "$(S):$(TA):$(DN):TolE"){
+  field (DESC, "Tolerance for positions")
+  field (PREC, "3")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(PINI, "YES")
+
+}
+
+record (calc, "$(S):$(TA):$(DN):InTolF"){
+  field (DESC, "Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):ReadLinF CPP")
+  field (INPB, "$(S):$(TA):$(DN):MoveLinF CPP")
+  field (INPC, "$(S):$(TA):$(DN):TolF CPP")
+  field (CALC, "ABS((ABS(A)-ABS(B)))<=C")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+record (ai, "$(S):$(TA):$(DN):TolF"){
+  field (DESC, "Tolerance for positions")
+  field (PREC, "3")
+  info(autosaveFields, "VAL")
+  info(archive, "Monitor, 00:01:00")
+  field(PINI, "YES")
+
+}
+
+
+record (calc, "$(S):$(TA):$(DN):InTol"){
+  field (DESC, "Global Within Tolerance")
+  field (INPA, "$(S):$(TA):$(DN):InTolA CPP")
+  field (INPB, "$(S):$(TA):$(DN):InTolB CPP")
+  field (INPC, "$(S):$(TA):$(DN):InTolC CPP")
+  field (INPD, "$(S):$(TA):$(DN):InTolD CPP")
+  field (INPE, "$(S):$(TA):$(DN):InTolE CPP")
+  field (INPF, "$(S):$(TA):$(DN):InTolF CPP")
+  field (CALC, "A&B&C&D&E&F")
+  info(archive, "Monitor, 00:01:00")
+  field(SCAN, ".5 second")
+
+}
+
+
+
+#################################################
+#Resume Movement Flag when sequence command ==4
+#################################################
+record(bo, "$(S):$(TA):$(DN):ResumeFlag")
+{
+  field(DESC, "Resume flag from command 4")
+  field(HIGH, "2")
+  info(archive, "Monitor, 00:01:00")
+  field(ZNAM, "Resume")
+  field(ONAM, "Resuming..")
+}
+

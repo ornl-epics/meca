@@ -1,0 +1,34 @@
+file Robot.template
+{
+pattern {S, TA, DN}
+        {CG3, SE, Robot}
+}
+
+file Alarm.db
+{
+pattern {S, TA, DN}
+        {CG3, SE, Robot}
+}
+
+
+file BoolCallBack.template
+{
+pattern {S, TA, DN}
+        {CG3, SE, Robot}
+}
+
+file RobotAssigned.template
+{
+pattern {S, TA, DN}
+        {CG3, SE, Robot}
+}
+
+file RobotScript.template
+{
+pattern {S, TA, DN, Location}
+        {CG3, SE, Robot, /home/controls/share/opi/meca/robot}
+}
+
+
+
+
